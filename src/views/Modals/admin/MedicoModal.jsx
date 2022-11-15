@@ -26,7 +26,7 @@ const MedicoModal = ({ modalOpen, nameController, toggleModal, information, setI
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -210,7 +210,7 @@ const MedicoModal = ({ modalOpen, nameController, toggleModal, information, setI
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.no_cuenta : ''}
-                                        {...register('cueno_cuentanta', { required: 'Este campo es requerido.' })}
+                                        {...register('no_cuenta', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
                                         {!!errors.no_cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.no_cuenta.message}</>}
