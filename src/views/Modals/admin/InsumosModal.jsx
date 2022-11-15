@@ -26,7 +26,7 @@ const InsumosModal = ({ modalOpen, nameController, toggleModal, information, set
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -52,9 +52,10 @@ const InsumosModal = ({ modalOpen, nameController, toggleModal, information, set
         },
         setData = async () => {
             await setValue('nombre', information.nombre)
-            await setValue('nit', information.nit)
-            await setValue('direccion', information.direccion)
             await setValue('descripcion', information.descripcion)
+            await setValue('marca', information.marca)
+            await setValue('presentacion', information.presentacion)
+            await setValue('dimensional', information.dimensional)
         }
         
     useEffect(

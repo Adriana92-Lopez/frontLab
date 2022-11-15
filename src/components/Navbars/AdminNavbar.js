@@ -22,7 +22,7 @@ import { useLocation } from "react-router-dom";
 const AdminNavbar = (props) => {
 
   let location = useLocation();
-  const user = JSON.parse(localStorage.getItem('authUser'))?.username
+  const user = JSON.parse(localStorage.getItem('authUser'))?.nombre_usuario
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -33,7 +33,7 @@ const AdminNavbar = (props) => {
           >
             {props.brandText}
           </Link>
-          {location.pathname !== '/admin/index' &&
+          {/* {location.pathname !== '/admin/index' &&
             <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
@@ -46,7 +46,7 @@ const AdminNavbar = (props) => {
                 </InputGroup>
               </FormGroup>
             </Form>
-          }
+          } */}
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
@@ -54,7 +54,7 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
+                      src={require("../../assets/img/theme/team-2-800x800.jpg")}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
@@ -66,12 +66,12 @@ const AdminNavbar = (props) => {
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Bienvenido</h6>
+                  <h6 className="text-overflow m-0">Bienvenido(a) {user}</h6>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
+                {/* <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My perfil</span>
-                </DropdownItem>
+                </DropdownItem> */}
                 {/* <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
@@ -86,7 +86,7 @@ const AdminNavbar = (props) => {
                 </DropdownItem> */}
                 <DropdownItem divider />
                 <DropdownItem onClick={(e) => userService.Exit()}>
-                  <i className="ni ni-user-run" />
+                <i className="fas fa-user-minus"></i>
                   <span>Cerrar Sesión</span>
                 </DropdownItem>
               </DropdownMenu>

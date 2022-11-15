@@ -23,12 +23,12 @@ const Puesto = () => {
     const [listPuesto, setListPuesto] = useState([]);
 
     const ListPuesto = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
+        const response = await GetRoute(`${nameController}/mostrar`)
         setListPuesto((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
+            const response = await PostRoute(`${nameController}/eliminar`, json)
             ListPuesto()
             const msg = (response[0] ? response[0].id : null)
             return msg
@@ -47,7 +47,7 @@ const Puesto = () => {
     }
 
     const updateState = async (item) => {
-        let messageToast = 'Paciente ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
+        let messageToast = 'Puesto ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
         const stringMsg = await RequestUpdateState(item);
         if (!stringMsg) {
             toast.warning('Ha fallado el cambio de estado.', OptionsToast)
@@ -57,26 +57,12 @@ const Puesto = () => {
     },
         Columns = [
             {
-                name: 'Nombres',
-                column: 'nombres',
+                name: 'Nombre',
+                column: 'nombre_puesto',
                 sortable: true,
                 center: true,
-                cell: row => row['nombres']
-            },
-            {
-                name: 'Apellidos',
-                column: 'apellidos',
-                sortable: true,
-                center: true,
-                cell: row => row['apellidos']
-            },
-            {
-                name: 'NIT',
-                column: 'nit',
-                sortable: true,
-                center: true,
-                cell: row => row['nit']
-            },
+                cell: row => row['nombre_puesto']
+            }, 
             {
                 name: 'Estado',
                 column: 'estado',
@@ -99,7 +85,7 @@ const Puesto = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}
@@ -134,7 +120,7 @@ const Puesto = () => {
                                     noHeader
                                     highlightOnHover
                                     pagination
-                                    data={[]}
+                                    data={listPuesto}
                                     columns={Columns}
                                     className='table-responsive react-dataTable'
                                     paginationRowsPerPageOptions={[10, 25, 50, 100]}

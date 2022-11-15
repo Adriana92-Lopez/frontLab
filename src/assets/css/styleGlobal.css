@@ -27,3 +27,12 @@
     cursor: pointer;
 }
 
+
+
+.colorBody {
+    background: #11cdef !important;
+}
+
+.colorBody2 {
+    background: #2690a2 !important; 
+}

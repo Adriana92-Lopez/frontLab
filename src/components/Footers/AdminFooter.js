@@ -26,7 +26,7 @@ const Footer = () => {
                 href="#"
                 rel="noopener noreferrer" 
               >
-                LABPROTEC
+                {/* LABPROTEC */}
               </NavLink>
             </NavItem>
 

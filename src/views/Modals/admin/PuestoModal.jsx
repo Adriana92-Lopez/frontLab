@@ -19,16 +19,16 @@ import {
 import { useForm } from "react-hook-form"
 import { PostRoute } from '../../../services/Private'
 
-const PuestosModal = ({ modalOpen, toggleModal, information, opcion, ListRoles }) => {
+const PuestosModal = ({ modalOpen, toggleModal, information, opcion, ListPuesto }) => {
 
     const nameController = "Puesto"
     const { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'upmodificardate'}`, data)
             // toast.success(response.message, OptionsToast)
-            ListRoles()
+            ListPuesto()
             toggleModal(null, 0)
             reset()
         },
@@ -38,20 +38,15 @@ const PuestosModal = ({ modalOpen, toggleModal, information, opcion, ListRoles }
 
                 json = {
                     id,
-                    nombre: data.nombre,
-                    codigo: data.codigo,
-                    bonoProductivo: data.bonoProductivo,
-                    salarioBase: data.salarioBase
+                   ...data
                 }
 
             StoreUpdate(json, id)
             clearErrors()
         },
         setData = async () => {
-            await setValue('codigo', information.codigo)
-            await setValue('nombre', information.nombre)
-            await setValue('bonoProductivo', information.bonoProductivo)
-            await setValue('salarioBase', information.salarioBase)
+            await setValue('nombre_puesto', information.nombre_puesto) 
+            await setValue('descripcion', information.descripcion) 
         }
 
     useEffect(
@@ -80,7 +75,7 @@ const PuestosModal = ({ modalOpen, toggleModal, information, opcion, ListRoles }
 
                     <div className="modal-header">
                         <h3 className="modal-title" id="modalOpenLabel">
-                            {opcion === 1 && 'Crear '}Rol
+                            {opcion === 1 && 'Crear '}Puesto
                         </h3>
                         <button
                             aria-label="Close"
@@ -93,38 +88,20 @@ const PuestosModal = ({ modalOpen, toggleModal, information, opcion, ListRoles }
                         </button>
                     </div>
                     <div className="modal-body">
-                        {
-                            opcion > 1 &&
-                            <Row>
-                                <Col lg={4} md={4}>
-                                    <FormGroup>
-                                        <p className="mb-1">Código</p>
-                                        <input
-                                            id="codigo"
-                                            name="codigo"
-                                            className="form-control"
-                                            disabled
-                                            autoComplete="off"
-                                            {...register('codigo')}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                        }
                         <Row>
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Puesto</p>
                                     <input
                                         id="puesto"
-                                        name="puesto"
+                                        name="nombre_puesto"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
-                                        {...register('puesto', { required: 'Este campo es requerido.' })}
+                                        {...register('nombre_puesto', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.puesto && <><i className="fas fa-exclamation-circle"></i> {errors.puesto.message}</>}
+                                        {!!errors.nombre_puesto && <><i className="fas fa-exclamation-circle"></i> {errors.nombre_puesto.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>
