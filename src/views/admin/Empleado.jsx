@@ -23,12 +23,12 @@ const Empleado = () => {
     const [listEmpleado, setListEmpleado] = useState([]);
 
     const ListEmpleado = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
+        const response = await GetRoute(`${nameController}/listado`)
         setListEmpleado((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
+            const response = await PostRoute(`${nameController}/eliminar`, json)
             ListEmpleado()
             const msg = (response[0] ? response[0].id : null)
             return msg
@@ -47,7 +47,7 @@ const Empleado = () => {
     }
 
     const updateState = async (item) => {
-        let messageToast = 'Paciente ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
+        let messageToast = 'Empleado ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
         const stringMsg = await RequestUpdateState(item);
         if (!stringMsg) {
             toast.warning('Ha fallado el cambio de estado.', OptionsToast)
@@ -69,13 +69,6 @@ const Empleado = () => {
                 sortable: true,
                 center: true,
                 cell: row => row['apellidos']
-            },
-            {
-                name: 'NIT',
-                column: 'nit',
-                sortable: true,
-                center: true,
-                cell: row => row['nit']
             },
             {
                 name: 'Estado',

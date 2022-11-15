@@ -20,16 +20,16 @@ const Examenes = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [opcion, setOpcion] = useState(0);
     const [contentInfor, setContentInfor] = useState(null);
-    const [listExamenes, setListExamenes] = useState([]);
+    const [verificarExamenes, setVerificarExamenes] = useState([]);
 
-    const ListExamenes = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
-        setListExamenes((response.length) ? response : [])
+    const VerificarExamenes = async () => {
+        const response = await GetRoute(`${nameController}/mostrar`)
+        setVerificarExamenes((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
-            ListExamenes()
+            const response = await PostRoute(`${nameController}/eliminar`, json)
+            VerificarExamenes()
             const msg = (response[0] ? response[0].id : null)
             return msg
         }
@@ -64,20 +64,6 @@ const Examenes = () => {
                 cell: row => row['nombres']
             },
             {
-                name: 'Apellidos',
-                column: 'apellidos',
-                sortable: true,
-                center: true,
-                cell: row => row['apellidos']
-            },
-            {
-                name: 'NIT',
-                column: 'nit',
-                sortable: true,
-                center: true,
-                cell: row => row['nit']
-            },
-            {
                 name: 'Estado',
                 column: 'estado',
                 sortable: true,
@@ -109,7 +95,7 @@ const Examenes = () => {
         ]
 
     useEffect(() => {
-        ListExamenes()
+        VerificarExamenes()
     }, [])
 
     return (
@@ -134,7 +120,7 @@ const Examenes = () => {
                                     noHeader
                                     highlightOnHover
                                     pagination
-                                    data={listExamenes}
+                                    data={verificarExamenes}
                                     columns={Columns}
                                     className='table-responsive react-dataTable'
                                     paginationRowsPerPageOptions={[10, 25, 50, 100]}
@@ -155,7 +141,7 @@ const Examenes = () => {
 
             </Container>
 
-            <ExamenesModal modalOpen={modalOpen} nameController={nameController} ListExamenes={ListExamenes} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
+            <ExamenesModal modalOpen={modalOpen} nameController={nameController} VerficarExamenes={VerificarExamenes} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
         </>
     );
 };

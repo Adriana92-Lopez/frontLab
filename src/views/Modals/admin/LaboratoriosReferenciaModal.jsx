@@ -19,22 +19,22 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListCategorias }) => {
+const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListLaboratoriosReferencia }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
                 setInformation("")
-                toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
+                toast.success(`Se ha ${!id ? 'crear' : 'modificar'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                ListCategorias()
+                ListLaboratoriosReferencia()
                 toggleModal(null, 0)
                 reset()
 
@@ -47,7 +47,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
             const json = { id: (information ? information.id : null) }
             const jsonRequest = { ...json, ...data }
             StoreUpdate(jsonRequest, information ? information.id : null)
-            clearErrors()
+            //clearErrors()
 
         },
         setData = async () => {
@@ -81,7 +81,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
 
                     <div className="modal-header pb-0">
                         <h3 className="modal-title" id="modalOpenLabel">
-                            {opcion === 1 && 'Crear '}Categorías
+                            {opcion === 1 && 'Crear '}LaboratoriosReferencia
                         </h3>
                         <button
                             aria-label="Close"
@@ -95,23 +95,8 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                     </div>
                     <div className="modal-body">
                         <Row className="mt-2">
-                            {
-                                information &&
-                                <Col lg={4} md={4} sm={12}>
-                                    <FormGroup>
-                                        <p className="mb-1">Código</p>
-                                        <input
-                                            id="codigo"
-                                            name="codigo"
-                                            autoComplete="off"
-                                            disabled
-                                            className="form-control"
-                                            defaultValue={information ? information.codigo : ''}
-                                            {...register('codigo')}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            }
+
+                
                             <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Nombre*</p>
@@ -184,16 +169,16 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                 <FormGroup>
                                     <p className="mb-1">Número de Cuenta*</p>
                                     <input
-                                        id="cuenta"
-                                        name="cuenta"
+                                        id="no_cuenta"
+                                        name="no_cuenta"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
-                                        defaultValue={information ? information.cuenta : ''}
-                                        {...register('cuenta', { required: 'Este campo es requerido.' })}
+                                        defaultValue={information ? information.no_cuenta : ''}
+                                        {...register('no_cuenta', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.cuenta.message}</>}
+                                        {!!errors.no_cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.no_cuenta.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>
@@ -218,16 +203,16 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                 <FormGroup>
                                     <p className="mb-1">Tipo de Cuenta*</p>
                                     <input
-                                        id="tipoCuenta"
-                                        name="tipoCuenta"
+                                        id="tipo_cuenta"
+                                        name="tipo_cuenta"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
-                                        defaultValue={information ? information.tipoCuenta : ''}
-                                        {...register('tipoCuenta', { required: 'Este campo es requerido.' })}
+                                        defaultValue={information ? information.tipo_cuenta : ''}
+                                        {...register('tipo_cuenta', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.tipoCuenta && <><i className="fas fa-exclamation-circle"></i> {errors.tipoCuenta.message}</>}
+                                        {!!errors.tipo_cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.tipo_cuenta.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>

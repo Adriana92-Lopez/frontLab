@@ -19,14 +19,14 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListCategorias }) => {
+const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListEmpleado }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -34,7 +34,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
                 toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                ListCategorias()
+                ListEmpleado()
                 toggleModal(null, 0)
                 reset()
 
@@ -47,7 +47,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
             const json = { id: (information ? information.id : null) }
             const jsonRequest = { ...json, ...data }
             StoreUpdate(jsonRequest, information ? information.id : null)
-            clearErrors()
+            //clearErrors()
 
         },
         setData = async () => {
@@ -81,7 +81,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
 
                     <div className="modal-header pb-0">
                         <h3 className="modal-title" id="modalOpenLabel">
-                            {opcion === 1 && 'Crear '}Categorías
+                            {opcion === 1 && 'Crear '}Empleado
                         </h3>
                         <button
                             aria-label="Close"
@@ -95,23 +95,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
                     </div>
                     <div className="modal-body">
                         <Row className="mt-2">
-                            {
-                                information &&
-                                <Col lg={4} md={4} sm={12}>
-                                    <FormGroup>
-                                        <p className="mb-1">Código</p>
-                                        <input
-                                            id="codigo"
-                                            name="codigo"
-                                            autoComplete="off"
-                                            disabled
-                                            className="form-control"
-                                            defaultValue={information ? information.codigo : ''}
-                                            {...register('codigo')}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            }
+                    
                             <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Nombres*</p>
@@ -148,7 +132,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
                             </Col>
                             <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
-                                    <p className="mb-1">Apellido Casada*</p>
+                                    <p className="mb-1">Apellido Casada</p>
                                     <input
                                         id="apellido_casada"
                                         name="apellido_casada"
@@ -158,9 +142,6 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
                                         defaultValue={information ? information.apellido_casada : ''}
                                         {...register('apellido_casada', { required: 'Este campo es requerido.' })}
                                     />
-                                    <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.apellido_casada && <><i className="fas fa-exclamation-circle"></i> {errors.apellido_casada.message}</>}
-                                    </span>
                                 </FormGroup>
                             </Col>
                             <Col lg={6} md={12} sm={12}>

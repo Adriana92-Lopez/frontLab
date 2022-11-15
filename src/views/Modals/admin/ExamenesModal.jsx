@@ -19,14 +19,14 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListCategorias }) => {
+const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListExamenes }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -34,7 +34,7 @@ const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, se
                 toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                ListCategorias()
+                ListExamenes()
                 toggleModal(null, 0)
                 reset()
 

@@ -23,21 +23,21 @@ const LaboratoriosReferencia = () => {
     const [listLaboratoriosReferencia, setListLaboratoriosReferencia] = useState([]);
 
     const ListLaboratoriosReferencia = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
+        const response = await GetRoute(`${nameController}/listado`)
         setListLaboratoriosReferencia((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
+            const response = await PostRoute(`${nameController}/eliminar`, json)
             ListLaboratoriosReferencia()
             const msg = (response[0] ? response[0].id : null)
             return msg
-        },
-        RequestOneData = async (id) => {
+        }
+       /* RequestOneData = async (id) => {
             const response = await PostRoute(`${nameController}/getOne`, { id })
             const resultado = (response[0] ? response[0] : null)
             return resultado;
-        }
+        }*/
 
     const toggleModal = (value, option) => {
 
@@ -68,13 +68,13 @@ const LaboratoriosReferencia = () => {
                 center: true,
                 cell: row => row['nombre']
             },
-            {
+            /*{
                 name: 'NIT',
                 column: 'nit',
                 sortable: true,
                 center: true,
                 cell: row => row['nit']
-            },
+            },*/
             {
                 name: 'Estado',
                 column: 'estado',

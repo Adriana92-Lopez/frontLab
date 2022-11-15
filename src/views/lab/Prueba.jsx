@@ -20,16 +20,16 @@ const Prueba = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [opcion, setOpcion] = useState(0);
     const [contentInfor, setContentInfor] = useState(null);
-    const [listPrueba, setListPrueba] = useState([]);
+    const [verificarPrueba, setVerificarPrueba] = useState([]);
 
-    const ListPrueba = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
-        setListPrueba((response.length) ? response : [])
+    const VerificarPrueba = async () => {
+        const response = await GetRoute(`${nameController}/mostrar`)
+        setVerificarPrueba((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
-            ListPrueba()
+            const response = await PostRoute(`${nameController}/eliminar`, json)
+            VerificarPrueba()
             const msg = (response[0] ? response[0].id : null)
             return msg
         }
@@ -47,7 +47,7 @@ const Prueba = () => {
     }
 
     const updateState = async (item) => {
-        let messageToast = 'Paciente ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
+        let messageToast = 'Prueba ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
         const stringMsg = await RequestUpdateState(item);
         if (!stringMsg) {
             toast.warning('Ha fallado el cambio de estado.', OptionsToast)
@@ -62,20 +62,6 @@ const Prueba = () => {
                 sortable: true,
                 center: true,
                 cell: row => row['nombres']
-            },
-            {
-                name: 'Apellidos',
-                column: 'apellidos',
-                sortable: true,
-                center: true,
-                cell: row => row['apellidos']
-            },
-            {
-                name: 'NIT',
-                column: 'nit',
-                sortable: true,
-                center: true,
-                cell: row => row['nit']
             },
             {
                 name: 'Estado',
@@ -109,7 +95,7 @@ const Prueba = () => {
         ]
 
     useEffect(() => {
-        ListPrueba()
+        VerificarPrueba()
     }, [])
 
     return (
@@ -134,7 +120,7 @@ const Prueba = () => {
                                     noHeader
                                     highlightOnHover
                                     pagination
-                                    data={listPrueba}
+                                    data={verificarPrueba}
                                     columns={Columns}
                                     className='table-responsive react-dataTable'
                                     paginationRowsPerPageOptions={[10, 25, 50, 100]}
@@ -155,7 +141,7 @@ const Prueba = () => {
 
             </Container>
 
-            <PruebaModal modalOpen={modalOpen} nameController={nameController} ListPrueba={ListPrueba} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
+            <PruebaModal modalOpen={modalOpen} nameController={nameController} VerificarPrueba={VerificarPrueba} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
         </>
     );
 };

@@ -19,14 +19,14 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListCategorias }) => {
+const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, VerificarPrueba }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -34,7 +34,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                 toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                ListCategorias()
+                VerificarPrueba()
                 toggleModal(null, 0)
                 reset()
 
@@ -47,7 +47,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
             const json = { id: (information ? information.id : null) }
             const jsonRequest = { ...json, ...data }
             StoreUpdate(jsonRequest, information ? information.id : null)
-            clearErrors()
+            //clearErrors()
 
         },
         setData = async () => {
@@ -235,16 +235,16 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                                 <FormGroup>
                                     <p className="mb-1">Paquete Promocional*</p>
                                     <input
-                                        id="paquete_promicional"
-                                        name="paquete_promicional"
+                                        id="paquete_promocional"
+                                        name="paquete_promocional"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
-                                        defaultValue={information ? information.paquete_promicional : ''}
-                                        {...register('paquete_promicional', { required: 'Este campo es requerido.' })}
+                                        defaultValue={information ? information.paquete_promocional : ''}
+                                        {...register('paquete_promocional', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.paquete_promicional && <><i className="fas fa-exclamation-circle"></i> {errors.paquete_promicional.message}</>}
+                                        {!!errors.paquete_promocional && <><i className="fas fa-exclamation-circle"></i> {errors.paquete_promocional.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>
