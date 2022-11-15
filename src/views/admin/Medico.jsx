@@ -23,12 +23,12 @@ const Medico = () => {
     const [listMedico, setListMedico] = useState([]);
 
     const ListMedico = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
+        const response = await GetRoute(`${nameController}/mostrar`)
         setListMedico((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
+            const response = await PostRoute(`${nameController}/eliminar`, json)
             ListMedico()
             const msg = (response[0] ? response[0].id : null)
             return msg
@@ -69,19 +69,15 @@ const Medico = () => {
                 cell: row => row['nombre_medico']
             },
             {
-                name: 'Estado',
-                column: 'estado',
-                sortable: true,
-                center: true,
-                width: '200px',
-                cell: row => <Alert color={row.estado === 1 ? 'success' : 'danger'} className="w-100 text-center m-auto alert-xs font-weight-bolder" style={{ padding: '5px' }}>
-                    {(row.estado === 0) && 'Inactivo'}
-                    {(row.estado === 1) && 'Activo'}
-                </Alert>
-            },
-            {
                 name: 'Clinica',
                 column: 'clinica',
+                sortable: true,
+                center: true,
+                cell: row => row['clinica']
+            },
+            {
+                name: 'Estado',
+                column: 'estado',
                 sortable: true,
                 center: true,
                 width: '200px',
@@ -101,7 +97,7 @@ const Medico = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}

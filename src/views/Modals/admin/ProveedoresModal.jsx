@@ -19,14 +19,14 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListCategorias }) => {
+const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListProveedor }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
         StoreUpdate = async (data, id) => {
             let response = []
-            response = await PostRoute(`${nameController}/${!id ? 'create' : 'update'}`, data)
+            response = await PostRoute(`${nameController}/${!id ? 'crear' : 'modificar'}`, data)
 
             if (response[0]) {
 
@@ -34,7 +34,7 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
                 toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                // ListProveedor()
+                 ListProveedor()
                 toggleModal(null, 0)
                 reset()
 
@@ -56,7 +56,7 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
             await setValue('direccion', information.direccion)
             await setValue('descripcion', information.descripcion)
         }
-        
+
     useEffect(
         () => {
             async function fetchMyAPI() {
@@ -97,7 +97,7 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
                     </div>
                     <div className="modal-body">
                         <Row className="mt-2">
-                        <Col lg={6} md={4} sm={12}>
+                            {/* <Col lg={6} md={4} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Código</p>
                                     <input
@@ -109,7 +109,7 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
                                         {...register('codigo')}
                                     />
                                 </FormGroup>
-                            </Col>
+                            </Col> */}
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Nombre*</p>
@@ -182,16 +182,16 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
                                 <FormGroup>
                                     <p className="mb-1">Número de Cuenta*</p>
                                     <input
-                                        id="cuenta"
-                                        name="cuenta"
+                                        id="no_cuenta"
+                                        name="no_cuenta"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.cuenta : ''}
-                                        {...register('cuenta', { required: 'Este campo es requerido.' })}
+                                        {...register('no_cuenta', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.cuenta.message}</>}
+                                        {!!errors.no_cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.no_cuenta.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>
@@ -216,16 +216,16 @@ const ProveedoresModal = ({ modalOpen, nameController, toggleModal, information,
                                 <FormGroup>
                                     <p className="mb-1">Tipo de Cuenta*</p>
                                     <input
-                                        id="tipoCuenta"
-                                        name="tipoCuenta"
+                                        id="tipo_cuenta"
+                                        name="tipo_cuenta"
                                         autoComplete="off"
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.tipoCuenta : ''}
-                                        {...register('tipoCuenta', { required: 'Este campo es requerido.' })}
+                                        {...register('tipo_cuenta', { required: 'Este campo es requerido.' })}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.tipoCuenta && <><i className="fas fa-exclamation-circle"></i> {errors.tipoCuenta.message}</>}
+                                        {!!errors.tipo_cuenta && <><i className="fas fa-exclamation-circle"></i> {errors.tipo_cuenta.message}</>}
                                     </span>
                                 </FormGroup>
                             </Col>

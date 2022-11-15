@@ -23,12 +23,12 @@ const Proveedores = () => {
     const [listProveedores, setListProveedores] = useState([]);
 
     const ListProveedores = async () => {
-        const response = await GetRoute(`${nameController}/getList`)
+        const response = await GetRoute(`${nameController}/listado`)
         setListProveedores((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
-            const response = await PostRoute(`${nameController}/update/state`, json)
+            const response = await PostRoute(`${nameController}/eliminar`, json)
             ListProveedores()
             const msg = (response[0] ? response[0].id : null)
             return msg
@@ -69,11 +69,11 @@ const Proveedores = () => {
                 cell: row => row['nombre']
             },
             {
-                name: 'NIT',
-                column: 'nit',
+                name: 'Correo',
+                column: 'email',
                 sortable: true,
                 center: true,
-                cell: row => row['nit']
+                cell: row => row['email']
             },
             {
                 name: 'Estado',
@@ -97,7 +97,7 @@ const Proveedores = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}
