@@ -17,15 +17,21 @@ import PruebaModal from "../Modals/admin/PruebaModal"
 
 const Prueba = () => {
     const nameController = "Prueba"
+    const ExamenesController = "Examenes"
     const [modalOpen, setModalOpen] = useState(false);
     const [opcion, setOpcion] = useState(0);
     const [contentInfor, setContentInfor] = useState(null);
     const [verificarPrueba, setVerificarPrueba] = useState([]);
+    const [catalogoExamen, setCatalogoExamen] = useState([]);
 
     const VerificarPrueba = async () => {
         const response = await GetRoute(`${nameController}/mostrar`)
         setVerificarPrueba((response.length) ? response : [])
     },
+        examenes = async () => {
+            const response = await GetRoute(`${ExamenesController}/catalogo`)
+            setCatalogoExamen((response.length) ? response : [])
+        },
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
             const response = await PostRoute(`${nameController}/eliminar`, json)
@@ -96,6 +102,7 @@ const Prueba = () => {
 
     useEffect(() => {
         VerificarPrueba()
+        examenes()
     }, [])
 
     return (
@@ -141,7 +148,7 @@ const Prueba = () => {
 
             </Container>
 
-            <PruebaModal modalOpen={modalOpen} nameController={nameController} VerificarPrueba={VerificarPrueba} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
+            <PruebaModal modalOpen={modalOpen} catalogoExamen={catalogoExamen} nameController={nameController} VerificarPrueba={VerificarPrueba} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
         </>
     );
 };

@@ -51,7 +51,7 @@ var routes = [
   },
   {
     path: "/laboratoriosReferencia",
-    name: "LaboratoriosReferencia",
+    name: "Laboratorios Referencia",
     icon: "ni ni-single-02 text-red",
     component: LaboratoriosReferencia,
     layout: "/admin"

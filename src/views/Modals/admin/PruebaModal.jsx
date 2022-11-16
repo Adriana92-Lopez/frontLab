@@ -19,10 +19,30 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, VerificarPrueba }) => {
+const PruebaModal = ({ modalOpen, nameController, catalogoExamen, toggleModal, information, setInformation, opcion, VerificarPrueba }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
+        [valuePaqueteP, setValuePaqueteP] = useState(null),
+        [WarningPaqueteP, setWarningPaqueteP] = useState(false),
+        [WarningExamen, setWarningExamen] = useState(false),
+        [examen, setExamen] = useState(null),
+        onChangePaquetePromocional = (data) => {
+            if (data) {
+                setWarningPaqueteP(false)
+            } else {
+                setWarningPaqueteP(true)
+            }
+            setValuePaqueteP(data)
+        },
+        onChangeExamen = (data) => {
+            if (data) {
+                setWarningExamen(false)
+            } else {
+                setWarningExamen(true)
+            }
+            setExamen(data)
+        },
 
         StoreUpdate = async (data, id) => {
             let response = []
@@ -44,6 +64,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
             // reset()
         },
         onSubmit = (data) => {
+            data = { ...data, id_examenes: examen.value, paquete_promocional: valuePaqueteP.value }
             const json = { id: (information ? information.id : null) }
             const jsonRequest = { ...json, ...data }
             StoreUpdate(jsonRequest, information ? information.id : null)
@@ -81,7 +102,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
 
                     <div className="modal-header pb-0">
                         <h3 className="modal-title" id="modalOpenLabel">
-                            {opcion === 1 && 'Crear '}Categorías
+                            {opcion === 1 && 'Crear '}Prueba
                         </h3>
                         <button
                             aria-label="Close"
@@ -95,23 +116,6 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                     </div>
                     <div className="modal-body">
                         <Row className="mt-2">
-                            {
-                                information &&
-                                <Col lg={12} md={12} sm={12}>
-                                    <FormGroup>
-                                        <p className="mb-1">Código</p>
-                                        <input
-                                            id="codigo"
-                                            name="codigo"
-                                            autoComplete="off"
-                                            disabled
-                                            className="form-control"
-                                            defaultValue={information ? information.codigo : ''}
-                                            {...register('codigo')}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            }
                             <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Tipo de Prueba*</p>
@@ -146,6 +150,27 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                                     </span>
                                 </FormGroup>
                             </Col>
+                            <Col lg={12} md={12} sm={12}>
+                                <FormGroup>
+                                    <p className="mb-1">Examen*</p>
+                                    <Select
+                                        name="examen"
+                                        id="examen"
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                        placeholder="Elija una opcion"
+                                        noOptionsMessage={() => "Sin resultados"}
+                                        isClearable
+                                        isDisabled={opcion === 2}
+                                        options={catalogoExamen}
+                                        value={examen}
+                                        onChange={onChangeExamen}
+                                    />
+                                    <span className="text-danger text-small d-block mb-2">
+                                        {!!WarningExamen && <><i className="fas fa-exclamation-circle"></i> Este campo es requerido</>}
+                                    </span>
+                                </FormGroup>
+                            </Col>
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Precio*</p>
@@ -168,6 +193,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                                     <p className="mb-1">Tiempo de Procesamiento*</p>
                                     <input
                                         id="tiempo_procesamiento"
+                                        type="time"
                                         name="tiempo_procesamiento"
                                         autoComplete="off"
                                         disabled={opcion === 2}
@@ -182,7 +208,7 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                             </Col>
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
-                                    <p className="mb-1">Precio con Oferta*</p>
+                                    <p className="mb-1">Precio con Oferta</p>
                                     <input
                                         id="precio_oferta"
                                         name="precio_oferta"
@@ -190,61 +216,58 @@ const PruebaModal = ({ modalOpen, nameController, toggleModal, information, setI
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.precio_oferta : ''}
-                                        {...register('precio_oferta', { required: 'Este campo es requerido.' })}
+                                        {...register('precio_oferta')}
                                     />
-                                    <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.precio_oferta && <><i className="fas fa-exclamation-circle"></i> {errors.precio_oferta.message}</>}
-                                    </span>
                                 </FormGroup>
                             </Col>
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
-                                    <p className="mb-1">Fecha inicio de oferta*</p>
+                                    <p className="mb-1">Fecha inicio de oferta</p>
                                     <input
                                         id="fecha_inicio_oferta"
                                         name="fecha_inicio_oferta"
                                         autoComplete="off"
+                                        type="date"
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.fecha_inicio_oferta : ''}
-                                        {...register('fecha_inicio_oferta', { required: 'Este campo es requerido.' })}
+                                        {...register('fecha_inicio_oferta')}
                                     />
-                                    <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.fecha_inicio_oferta && <><i className="fas fa-exclamation-circle"></i> {errors.fecha_inicio_oferta.message}</>}
-                                    </span>
                                 </FormGroup>
                             </Col>
                             <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
-                                    <p className="mb-1">Fecha fin de oferta*</p>
+                                    <p className="mb-1">Fecha fin de oferta</p>
                                     <input
                                         id="fecha_fin_oferta"
                                         name="fecha_fin_oferta"
                                         autoComplete="off"
+                                        type="date"
                                         disabled={opcion === 2}
                                         className="form-control"
                                         defaultValue={information ? information.fecha_fin_oferta : ''}
-                                        {...register('fecha_fin_oferta', { required: 'Este campo es requerido.' })}
+                                        {...register('fecha_fin_oferta')}
                                     />
-                                    <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.fecha_fin_oferta && <><i className="fas fa-exclamation-circle"></i> {errors.fecha_fin_oferta.message}</>}
-                                    </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={12} md={12} sm={12}>
+                            <Col lg={6} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Paquete Promocional*</p>
-                                    <input
-                                        id="paquete_promocional"
+                                    <Select
                                         name="paquete_promocional"
-                                        autoComplete="off"
-                                        disabled={opcion === 2}
-                                        className="form-control"
-                                        defaultValue={information ? information.paquete_promocional : ''}
-                                        {...register('paquete_promocional', { required: 'Este campo es requerido.' })}
+                                        id="paquete_promocional"
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                        placeholder="Elija una opcion"
+                                        noOptionsMessage={() => "Sin resultados"}
+                                        isClearable
+                                        isDisabled={opcion === 2}
+                                        options={[{ value: "1", label: "Sí" }, { value: "0", label: "No" }]}
+                                        value={valuePaqueteP}
+                                        onChange={onChangePaquetePromocional}
                                     />
                                     <span className="text-danger text-small d-block mb-2">
-                                        {!!errors.paquete_promocional && <><i className="fas fa-exclamation-circle"></i> {errors.paquete_promocional.message}</>}
+                                        {!!WarningPaqueteP && <><i className="fas fa-exclamation-circle"></i> Este campo es requerido</>}
                                     </span>
                                 </FormGroup>
                             </Col>

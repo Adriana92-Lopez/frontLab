@@ -57,22 +57,11 @@ const Examenes = () => {
     },
         Columns = [
             {
-                name: 'Nombres',
-                column: 'nombres',
+                name: 'Nombre',
+                column: 'nombre',
                 sortable: true,
                 center: true,
-                cell: row => row['nombres']
-            },
-            {
-                name: 'Estado',
-                column: 'estado',
-                sortable: true,
-                center: true,
-                width: '200px',
-                cell: row => <Alert color={row.estado === 1 ? 'success' : 'danger'} className="w-100 text-center m-auto alert-xs font-weight-bolder" style={{ padding: '5px' }}>
-                    {(row.estado === 0) && 'Inactivo'}
-                    {(row.estado === 1) && 'Activo'}
-                </Alert>
+                cell: row => row['nombre']
             },
             {
                 name: 'Acciones',
@@ -85,7 +74,7 @@ const Examenes = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}

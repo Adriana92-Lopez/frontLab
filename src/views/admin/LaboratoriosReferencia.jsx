@@ -23,7 +23,7 @@ const LaboratoriosReferencia = () => {
     const [listLaboratoriosReferencia, setListLaboratoriosReferencia] = useState([]);
 
     const ListLaboratoriosReferencia = async () => {
-        const response = await GetRoute(`${nameController}/listado`)
+        const response = await GetRoute(`${nameController}/mostrar`)
         setListLaboratoriosReferencia((response.length) ? response : [])
     },
         RequestUpdateState = async (data) => {
@@ -52,7 +52,7 @@ const LaboratoriosReferencia = () => {
     }
 
     const updateState = async (item) => {
-        let messageToast = 'LaboratoriosReferencia ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
+        let messageToast = 'Referencia de laboratorio ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
         const stringMsg = await RequestUpdateState(item);
         if (!stringMsg) {
             toast.warning('Ha fallado el cambio de estado.', OptionsToast)
@@ -67,14 +67,7 @@ const LaboratoriosReferencia = () => {
                 sortable: true,
                 center: true,
                 cell: row => row['nombre']
-            },
-            /*{
-                name: 'NIT',
-                column: 'nit',
-                sortable: true,
-                center: true,
-                cell: row => row['nit']
-            },*/
+            }, 
             {
                 name: 'Estado',
                 column: 'estado',
@@ -97,7 +90,7 @@ const LaboratoriosReferencia = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}

@@ -19,7 +19,7 @@ import Select from 'react-select'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListExamenes }) => {
+const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, VerficarExamenes }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
@@ -34,7 +34,7 @@ const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, se
                 toast.success(`Se ha ${!id ? 'creado' : 'modificado'} el registro con éxito`, OptionsToast)
                 const json = { ...response[0], ...data };
                 setInformation(json)
-                ListExamenes()
+                VerficarExamenes()
                 toggleModal(null, 0)
                 reset()
 
@@ -52,7 +52,7 @@ const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, se
         },
         setData = async () => {
             await setValue('nombre', information.nombre)
-            await setValue('codigo', information.codigo)
+            await setValue('descripcion', information.descripcion)
         }
 
     useEffect(
@@ -94,24 +94,7 @@ const ExamenesModal = ({ modalOpen, nameController, toggleModal, information, se
                         </button>
                     </div>
                     <div className="modal-body">
-                        <Row className="mt-2">
-                            {
-                                information &&
-                                <Col lg={12} md={12} sm={12}>
-                                    <FormGroup>
-                                        <p className="mb-1">Código</p>
-                                        <input
-                                            id="codigo"
-                                            name="codigo"
-                                            autoComplete="off"
-                                            disabled
-                                            className="form-control"
-                                            defaultValue={information ? information.codigo : ''}
-                                            {...register('codigo')}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            }
+                        <Row className="mt-2"> 
                             <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Area*</p>

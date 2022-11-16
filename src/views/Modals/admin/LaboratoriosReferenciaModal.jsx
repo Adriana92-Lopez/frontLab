@@ -52,7 +52,12 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
         },
         setData = async () => {
             await setValue('nombre', information.nombre)
-            await setValue('codigo', information.codigo)
+            await setValue('direccion', information.direccion)
+            await setValue('telefono', information.telefono)
+            await setValue('email', information.email)
+            await setValue('no_cuenta', information.no_cuenta)
+            await setValue('banco', information.banco)
+            await setValue('tipo_cuenta', information.tipo_cuenta)
         }
 
     useEffect(
@@ -81,7 +86,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
 
                     <div className="modal-header pb-0">
                         <h3 className="modal-title" id="modalOpenLabel">
-                            {opcion === 1 && 'Crear '}LaboratoriosReferencia
+                            {opcion === 1 && 'Crear '}Laboratorios de Referencia
                         </h3>
                         <button
                             aria-label="Close"
@@ -114,7 +119,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={12} md={6} sm={12}>
+                            <Col lg={12} md={12} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Dirección*</p>
                                     <input
@@ -131,7 +136,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={4} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Teléfono*</p>
                                     <input
@@ -148,7 +153,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={4} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Email*</p>
                                     <input
@@ -165,7 +170,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={12} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Número de Cuenta*</p>
                                     <input
@@ -182,7 +187,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={4} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Banco*</p>
                                     <input
@@ -199,7 +204,7 @@ const LaboratoriosReferenciaModal = ({ modalOpen, nameController, toggleModal, i
                                     </span>
                                 </FormGroup>
                             </Col>
-                            <Col lg={4} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12}>
                                 <FormGroup>
                                     <p className="mb-1">Tipo de Cuenta*</p>
                                     <input
