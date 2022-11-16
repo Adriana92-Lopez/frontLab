@@ -66,7 +66,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,500 USD</td>
+                    <td>Q2,500 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-warning" />
@@ -216,7 +216,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$1,800 USD</td>
+                    <td>Q1,800 USD</td>
                     <td>
                       <Badge color="" className="badge-dot">
                         <i className="bg-success" />
@@ -364,7 +364,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$3,150 USD</td>
+                    <td>Q3,150 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-danger" />
@@ -514,7 +514,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$4,400 USD</td>
+                    <td>Q4,400 USD</td>
                     <td>
                       <Badge color="" className="badge-dot">
                         <i className="bg-info" />
@@ -664,7 +664,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,200 USD</td>
+                    <td>Q2,200 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-success" />
@@ -893,7 +893,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,500 USD</td>
+                    <td>Q2,500 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-warning" />
@@ -1043,7 +1043,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$1,800 USD</td>
+                    <td>Q1,800 USD</td>
                     <td>
                       <Badge color="" className="badge-dot">
                         <i className="bg-success" />
@@ -1188,7 +1188,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$3,150 USD</td>
+                    <td>Q3,150 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-danger" />
@@ -1338,7 +1338,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$4,400 USD</td>
+                    <td>Q4,400 USD</td>
                     <td>
                       <Badge color="" className="badge-dot">
                         <i className="bg-info" />
@@ -1488,7 +1488,7 @@ const Tables = () => {
                         </Media>
                       </Media>
                     </th>
-                    <td>$2,200 USD</td>
+                    <td>Q2,200 USD</td>
                     <td>
                       <Badge color="" className="badge-dot mr-4">
                         <i className="bg-success" />

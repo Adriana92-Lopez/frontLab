@@ -14,10 +14,12 @@ import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 import Header from "components/Headers/Header.js";
 import PacienteModal from "../Modals/admin/PacienteModal"
+import OrdenMedicaModal from 'views/Modals/admin/OrdenMedicaModal';
 
 const Paciente = () => {
     const nameController = "Paciente"
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpenOrden, setModalOpenOrden] = useState(false);
     const [opcion, setOpcion] = useState(0);
     const [contentInfor, setContentInfor] = useState(null);
     const [listPaciente, setListPaciente] = useState([]);
@@ -26,6 +28,8 @@ const Paciente = () => {
         const response = await GetRoute(`${nameController}/listado`)
         setListPaciente((response.length) ? response : [])
     },
+
+        [active, setActive] = useState("1"),
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
             const response = await PostRoute(`${nameController}/eliminar`, json)
@@ -44,7 +48,19 @@ const Paciente = () => {
         }
         setModalOpen(!modalOpen);
         setOpcion(option)
-    }
+    },
+        toggleModalOrden = (value, option) => {
+
+            setContentInfor(null)
+            if (option > 1) {
+                setContentInfor(value)
+            } else {
+                setContentInfor(null)
+            }
+            setModalOpenOrden(!modalOpenOrden);
+            setOpcion(option)
+        }
+
 
     const updateState = async (item) => {
         let messageToast = 'Paciente ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
@@ -86,7 +102,7 @@ const Paciente = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
+                                <Icon.Clipboard size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModalOrden(row, 3)} />
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}
@@ -141,7 +157,7 @@ const Paciente = () => {
                 </Row>
 
             </Container>
-
+            <OrdenMedicaModal active={active} setActive={setActive} modalOpen={modalOpenOrden} toggleModal={toggleModalOrden} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
             <PacienteModal modalOpen={modalOpen} nameController={nameController} ListPaciente={ListPaciente} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
         </>
     );
