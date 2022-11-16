@@ -47,7 +47,7 @@ const Empleado = () => {
     }
 
     const updateState = async (item) => {
-        let messageToast = 'Empleado ' + (item.estado === 1 ? 'activado' : 'desactivado') + ' correctamente.';
+        let messageToast = 'Empleado ' + (item.estado === 1 ? 'desactivado' : 'activado') + ' correctamente.';
         const stringMsg = await RequestUpdateState(item);
         if (!stringMsg) {
             toast.warning('Ha fallado el cambio de estado.', OptionsToast)
@@ -57,18 +57,11 @@ const Empleado = () => {
     },
         Columns = [
             {
-                name: 'Nombres',
-                column: 'nombres',
+                name: 'Nombre Completo',
+                column: 'nombre_completo',
                 sortable: true,
                 center: true,
-                cell: row => row['nombres']
-            },
-            {
-                name: 'Apellidos',
-                column: 'apellidos',
-                sortable: true,
-                center: true,
-                cell: row => row['apellidos']
+                cell: row => row['nombre_completo']
             },
             {
                 name: 'Estado',
@@ -92,7 +85,7 @@ const Empleado = () => {
                             row.estado === 1 &&
                             <>
                                 <Icon.Eye size={20} className="text-info mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 2)} />
-                                <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} />
+                                {/* <Icon.Edit size={20} className="text-primary mr-2 me-3 cursor-pointer" onClick={() => toggleModal(row, 3)} /> */}
                             </>
                         }
                         {row.estado === 1 ? <Icon.Trash className="text-danger mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} /> : <Icon.Check className="text-success mr-1 me-3 cursor-pointer" size={20} onClick={() => updateState(row)} />}
