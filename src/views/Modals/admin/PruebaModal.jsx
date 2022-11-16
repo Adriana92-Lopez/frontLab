@@ -73,7 +73,18 @@ const PruebaModal = ({ modalOpen, nameController, catalogoExamen, toggleModal, i
         },
         setData = async () => {
             await setValue('nombre', information.nombre)
-            await setValue('codigo', information.codigo)
+            await setValue('descripcion', information.descripcion)
+            await setValue('precio', information.precio)
+            const tiempo = new Date(information.tiempo_procesamiento)
+
+            const resultTiempo = tiempo.getHours() + ":" + tiempo.getMinutes()
+            await setValue('tiempo_procesamiento', resultTiempo)
+            await setValue('precio_oferta', information.precio_oferta)
+            await setValue('fecha_inicio_oferta', information.fecha_inicio_oferta)
+            await setValue('fecha_fin_oferta', information.fecha_fin_oferta)
+
+            await setExamen({ value: information.value, label: information.label })
+            await setValuePaqueteP({ value: information.paquete_promocional, label: (information.paquete_promocional === "0") ? 'No' : 'Sí' })
         }
 
     useEffect(
