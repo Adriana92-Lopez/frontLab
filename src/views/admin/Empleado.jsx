@@ -20,7 +20,10 @@ const Empleado = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [opcion, setOpcion] = useState(0);
     const [contentInfor, setContentInfor] = useState(null);
-    const [listEmpleado, setListEmpleado] = useState([]);
+    const [listEmpleado, setListEmpleado] = useState([]),
+
+        [active, setActive] = useState("1"),
+        [referencias, setReferencias] = useState([]);
 
     const ListEmpleado = async () => {
         const response = await GetRoute(`${nameController}/listado`)
@@ -35,11 +38,12 @@ const Empleado = () => {
         }
 
     const toggleModal = (value, option) => {
-
+        setReferencias([])
         setContentInfor(null)
         if (option > 1) {
             setContentInfor(value)
         } else {
+            setActive("1")
             setContentInfor(null)
         }
         setModalOpen(!modalOpen);
@@ -141,7 +145,7 @@ const Empleado = () => {
 
             </Container>
 
-            <EmpleadoModal modalOpen={modalOpen} nameController={nameController} ListEmpleado={ListEmpleado} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
+            <EmpleadoModal modalOpen={modalOpen} active={active} setActive={setActive} nameController={nameController} referencias={referencias} setReferencias={setReferencias} ListEmpleado={ListEmpleado} toggleModal={toggleModal} opcion={opcion} information={contentInfor} setInformation={setContentInfor} />
         </>
     );
 };

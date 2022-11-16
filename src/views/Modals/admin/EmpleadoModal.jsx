@@ -22,13 +22,11 @@ import * as Icon from 'react-feather'
 import { OptionsToast } from 'variables';
 import { toast } from 'react-toastify'
 
-const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, setInformation, opcion, ListEmpleado }) => {
+const EmpleadoModal = ({ modalOpen, referencias,active, setActive, setReferencias, nameController, toggleModal, information, setInformation, opcion, ListEmpleado }) => {
 
     const ReferenciaEmpleadosController = "ReferenciaEmpleados";
     const { register, handleSubmit, watch, formState: { errors }, clearErrors, reset, setValue } = useForm(),
 
-        [active, setActive] = useState("1"),
-        [referencias, setReferencias] = useState([]),
         nextTab = (e) => {
             setActive(e)
         },
@@ -75,7 +73,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
         RequestUpdateState = async (data) => {
             const json = { id: data.id, estado: (data.estado === 0 ? 1 : 0) }
             const response = await PostRoute(`${ReferenciaEmpleadosController}/eliminar`, json)
-            ListReferencias({ id_empleado: (opcion > 1) ? data.id : data.id_empleado })
+            ListReferencias({ id_empleado: (opcion > 1) ? information.id : information.id_empleado })
             const msg = (response[0] ? response[0].id : null)
             return msg
         },
@@ -157,7 +155,7 @@ const EmpleadoModal = ({ modalOpen, nameController, toggleModal, information, se
         <>
             <Modal
                 isOpen={modalOpen}
-                toggle={function noRefCheck(e) { toggleModal(null, 0); clearErrors(); }}
+                toggle={function noRefCheck(e) { toggleModal(null, 0); clearErrors(); setReferencias([]); }}
                 className="modal-dialog-centered"
                 size="lg"
             >
