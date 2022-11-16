@@ -64,6 +64,7 @@ const LaboratoriosReferencia = () => {
             {
                 name: 'Nombre',
                 column: 'nombre',
+                selector: row => row.nombre,
                 sortable: true,
                 center: true,
                 cell: row => row['nombre']

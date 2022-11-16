@@ -65,19 +65,21 @@ const Proveedores = () => {
                 name: 'Nombre',
                 column: 'nombre',
                 sortable: true,
+                selector: row => row.nombre,
                 center: true,
                 cell: row => row['nombre']
             },
             {
                 name: 'Correo',
                 column: 'email',
-                sortable: true,
+                sortable: false,
                 center: true,
                 cell: row => row['email']
             },
             {
                 name: 'Estado',
                 column: 'estado',
+                selector: row => row.estado,
                 sortable: true,
                 center: true,
                 width: '200px',

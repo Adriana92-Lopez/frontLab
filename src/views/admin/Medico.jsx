@@ -64,6 +64,7 @@ const Medico = () => {
             {
                 name: 'Nombre',
                 column: 'nombre_medico',
+                selector: row => row.nombre_medico,
                 sortable: true,
                 center: true,
                 cell: row => row['nombre_medico']
@@ -72,6 +73,7 @@ const Medico = () => {
                 name: 'Clinica',
                 column: 'clinica',
                 sortable: true,
+                selector: row => row.clinica,
                 center: true,
                 cell: row => row['clinica']
             },

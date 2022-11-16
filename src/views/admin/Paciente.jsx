@@ -60,6 +60,7 @@ const Paciente = () => {
                 name: 'Nombres',
                 column: 'nombre_completo',
                 sortable: true,
+                selector: row => row.nombre_completo,
                 center: true,
                 cell: row => row['nombre_completo']
             },

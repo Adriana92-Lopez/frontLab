@@ -60,6 +60,7 @@ const Puesto = () => {
                 name: 'Nombre',
                 column: 'nombre_puesto',
                 sortable: true,
+                selector: row => row.nombre_puesto,
                 center: true,
                 cell: row => row['nombre_puesto']
             }, 

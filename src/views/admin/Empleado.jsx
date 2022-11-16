@@ -63,6 +63,7 @@ const Empleado = () => {
             {
                 name: 'Nombre Completo',
                 column: 'nombre_completo',
+                selector: row => row.nombre_completo,
                 sortable: true,
                 center: true,
                 cell: row => row['nombre_completo']
